@@ -1,16 +1,19 @@
 export class Gameover {
 
-     canvas;
+    canvas;
     pencil;
 
-    constructor(canvas, pencil){
-        this.canvas = canvas
-        this.pencil = pencil
+    constructor(canvas, pencil) {
+        this.canvas = canvas;
+        this.pencil = pencil;
     }
 
     update() {
-        console.log("game over")
+        console.log("In gameOver!")
+        this.pencil.font = "20px Georgia";
+        this.pencil.fillText("Game over", 10, 50);
     }
-    
-    
+
+
+
 }

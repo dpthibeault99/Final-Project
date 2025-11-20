@@ -18,9 +18,9 @@ let state = title;
 
 function gameloop(){
 
-    pencil.clearRect(0,0, canvas.width, Canvas.hieght)
+    pencil.clearRect(0,0, canvas.width, canvas.hieght);
 
-    let command = state.update()
+    let command = state.update();
 
     if(command == "title") {
         state = title;
