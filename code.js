@@ -20,7 +20,7 @@ let state = title;
 
 function gameloop(){
 
-    pencil.clearRect(0,0, canvas.width, canvas.hieght);
+    pencil.clearRect(0,0, canvas.width, canvas.height);
 
     let command = state.update();
 
