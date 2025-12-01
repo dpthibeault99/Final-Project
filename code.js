@@ -5,8 +5,8 @@ import { Title } from "./states/title.js";
 import { Toolbox } from "./toolbox.js";
 import { Credits } from "./states/credits.js";
 import { Meteor } from "./states/meteor.js";  
-// For reasons i dont understand, i had 
-// to put meteor.js is 
+// For reasons i dont understand, 
+// i had to put meteor.js is 
 //the states folder for it to work
 
 

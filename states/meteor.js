@@ -8,7 +8,12 @@ export class Meteor {
         this.pencil = pencil;
 
         this.size = 60;
-        this.reset();                // sets position *and* random speed
+
+        // Use standard rectangle fields for collision
+        this.width = this.size;
+        this.height = this.size;
+
+        this.reset();  // sets x, y, random speed
     }
 
     reset() {
@@ -16,36 +21,28 @@ export class Meteor {
         this.x = this.canvas.width;
 
         // Random vertical placement
-        this.y = Math.floor(Math.random() * (this.canvas.height - this.size));
+        this.y = Math.floor(Math.random() * (this.canvas.height - this.height));
 
-        // 🔥 Assign a random speed for this meteor (2–7 px per frame)
+        // Random speed between 2 and 7
         this.speed = Math.random() * 5 + 2;
-
-        // Collision box
-        this.topLeft = { x: this.x, y: this.y };
-        this.bottomRight = { x: this.x + this.size, y: this.y + this.size };
     }
 
     move() {
         this.x -= this.speed;
 
-        // Update collision box
-        this.topLeft.x = this.x;
-        this.bottomRight.x = this.x + this.size;
-
-        // If off-screen, respawn with NEW random speed & height
-        if (this.x + this.size < 0) {
+        // If off-screen, respawn with new random speed and height
+        if (this.x + this.width < 0) {
             this.reset();
         }
     }
 
     draw() {
-        this.pencil.fillStyle = "#444";  // dark gray
+        this.pencil.fillStyle = "#444";
         this.pencil.fillRect(
             this.x,
             this.y,
-            this.size,
-            this.size
+            this.width,
+            this.height
         );
     }
 }
