@@ -38,7 +38,8 @@ function gameloop(){
     if(command == "game") {
         state = game
     }
-    /// i was to focused on title.js i forgot about code.js. took me like an hour 
+    // i was to focused on title.js i forgot about code.js. 
+    // took me like an hour 
     // to figure out why credits wasnt working 
     if(command == "credits") {
         state = credits

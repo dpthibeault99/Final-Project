@@ -62,7 +62,7 @@ export class Game {
         this.projectiles.push(new Projectile(projX, projY, this.pencil));
     }
 
-    // 🔥 FIXED COLLISION FUNCTION (AABB)
+    // Fixed collison
     checkCollision(bird, meteor) {
         return !(
             bird.x + bird.width < meteor.x ||
@@ -141,7 +141,13 @@ export class Game {
             console.log("KaBOOM!");
 
             // Remove meteor
+            // Need to redraw meteor
             this.meteors.splice(m, 1);
+
+            this.meteors.push(new Meteor(this.canvas, this.pencil));
+            // ^^^ copy / paste for line 30
+            // had to add "this." to canvas and pencil
+            
 
             // Remove projectile
             this.projectiles.splice(i, 1);
