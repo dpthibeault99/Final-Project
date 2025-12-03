@@ -1,6 +1,10 @@
 import { Toolbox } from "../toolbox.js";
 import { Meteor } from "./meteor.js";
 import { Projectile } from "../projectile.js";
+import { Gameover } from "./gameOver.js";
+
+let time = 0
+let kaboom = 0
 
 export class Game {
 
@@ -13,6 +17,7 @@ export class Game {
     toolbox = new Toolbox();
     meteors = [];
     projectiles = [];
+    
 
     ySpeed = 0.5;
     maximumYSpeed = 8;
@@ -20,6 +25,9 @@ export class Game {
     constructor(canvas, pencil) {
         this.canvas = canvas;
         this.pencil = pencil;
+
+        setInterval(() => this.countTime(), 1000); 
+        //^^this had to be in the constructor for some reason
 
         // Load bird image
         this.image = new Image();
@@ -72,6 +80,13 @@ export class Game {
         );
     }
 
+    
+
+    countTime() {
+    time++;
+    document.getElementById("timeDisplay").innerHTML = "Time:" + time;
+    }
+
     update() {
         this.pencil.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -109,6 +124,17 @@ export class Game {
         for (let m of this.meteors) {
             if (this.checkCollision(birdBox, m)) {
                 console.log("HIT!");
+                // change to gameOver.js
+            
+                // pencil is not defined? 
+                // add "this. again
+            this.fillStyle = "red";
+            this.font = "30px Arial";
+            this.pencil.fillText("GAME OVER", 90, 200);
+            this.pencil.fillText("Click or Press Key to Restart", 30, 240);
+            this.changeToState = "gameOver";// copied from title.js 
+            // line 40 and changed to gameOver
+
             }
         }
 
@@ -140,12 +166,17 @@ export class Game {
         if (hit) {
             console.log("KaBOOM!");
 
+            
+    kaboom ++; // im fucking awesome
+    document.getElementById("kaboomDisplay").innerHTML = "KaBoom:" + time;
+    
+
             // Remove meteor
             // Need to redraw meteor
             this.meteors.splice(m, 1);
 
             this.meteors.push(new Meteor(this.canvas, this.pencil));
-            // ^^^ copy / paste for line 30
+            // ^^^ copy + paste for line 30 then I
             // had to add "this." to canvas and pencil
             
 
@@ -154,6 +185,9 @@ export class Game {
 
             break; // stop checking this projectile
         }
+
+     
+        
     }
 }
 
@@ -161,5 +195,13 @@ export class Game {
         this.pencil.fillStyle = "gray";
         this.pencil.font = "20px Georgia";
         this.pencil.fillText("Game", 300, 50);
+
+          if (this.changeToState) {
+            const result = this.changeToState;
+            this.changeToState = false;
+            return result;  // "game" or "credits"
+            //Copy + paste from titlee.js line 98 - 101 
+
     }
+}
 }
