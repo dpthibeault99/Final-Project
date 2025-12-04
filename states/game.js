@@ -1,50 +1,57 @@
 import { Toolbox } from "../toolbox.js";
 import { Meteor } from "./meteor.js";
 import { Projectile } from "../projectile.js";
-import { Gameover } from "./gameOver.js";
+
 
 let time = 0
 let kaboom = 0
 
 export class Game {
 
-    x = 50;
-    y = 50;
-    width = 50;
-    height = 50;
-    canvas;
-    pencil;
-    toolbox = new Toolbox();
-    meteors = [];
-    projectiles = [];
-    
+   
 
-    ySpeed = 0.5;
-    maximumYSpeed = 8;
+    enterGame(){
 
-    constructor(canvas, pencil) {
-        this.canvas = canvas;
-        this.pencil = pencil;
+       this.x = 50;
+       this.y = 50;
+       this.width = 50;
+       this.height = 50;
+    //    this.canvas;
+    //    this.pencil;
+       this.toolbox = new Toolbox();
+       this.meteors = [];
+       this.projectiles = [];
+        
 
-        setInterval(() => this.countTime(), 1000); 
-        //^^this had to be in the constructor for some reason
+       this.ySpeed = 0.5;
+       this.maximumYSpeed = 8;
 
-        // Load bird image
-        this.image = new Image();
-        this.image.src = "./states/bird.png";
+         this.timerID = setInterval(() => this.countTime(), 1000); 
 
-        // Create meteors
+          // Create meteors
         for (let i = 0; i < 3; i++) {
-            this.meteors.push(new Meteor(canvas, pencil));
+            this.meteors.push(new Meteor(this.canvas, this.pencil));
         }
 
-        // Controls
+              // Controls
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space") this.flap();
             if (e.code === "Enter") this.shoot();
         });
 
-        canvas.addEventListener("mousedown", () => this.flap());
+        this.canvas.addEventListener("mousedown", () => this.flap());
+
+    }
+
+    constructor(canvas, pencil) {
+        this.canvas = canvas;
+        this.pencil = pencil;
+
+       
+        // Load bird image
+        this.image = new Image();
+        this.image.src = "./states/bird.png";
+        
     }
 
     draw() {
@@ -79,8 +86,6 @@ export class Game {
             bird.y > meteor.y + meteor.size
         );
     }
-
-    
 
     countTime() {
     time++;
@@ -125,14 +130,21 @@ export class Game {
             if (this.checkCollision(birdBox, m)) {
                 console.log("HIT!");
                 // change to gameOver.js
+
+                time = 0 // keeps stacking the time
+
+                clearInterval(this.timerID); 
+                //HOw do i set this to 0?
+                // ^how to stop time after leaving the game
             
                 // pencil is not defined? 
                 // add "this. again
-            this.fillStyle = "red";
-            this.font = "30px Arial";
-            this.pencil.fillText("GAME OVER", 90, 200);
-            this.pencil.fillText("Click or Press Key to Restart", 30, 240);
-            this.changeToState = "gameOver";// copied from title.js 
+            
+            this.changeToState = "gameOver";
+            
+            return "gameOver"; // i almost never put return
+            // copied 
+            // from title.js 
             // line 40 and changed to gameOver
 
             }
@@ -167,8 +179,8 @@ export class Game {
             console.log("KaBOOM!");
 
             
-    kaboom ++; // im fucking awesome
-    document.getElementById("kaboomDisplay").innerHTML = "KaBoom:" + time;
+            kaboom ++; // im fucking awesome
+            document.getElementById("kaboomDisplay").innerHTML = "KaBoom:" + kaboom;
     
 
             // Remove meteor
@@ -179,9 +191,15 @@ export class Game {
             // ^^^ copy + paste for line 30 then I
             // had to add "this." to canvas and pencil
             
-
             // Remove projectile
             this.projectiles.splice(i, 1);
+
+            if(kaboom === 2 ){
+                this.changeToState = "youWin"
+                console.log("YouWin")
+                return "youWin"
+                
+            } //i forgot return again
 
             break; // stop checking this projectile
         }
@@ -200,7 +218,7 @@ export class Game {
             const result = this.changeToState;
             this.changeToState = false;
             return result;  // "game" or "credits"
-            //Copy + paste from titlee.js line 98 - 101 
+            //Copy + paste from title.js line 98 - 101 
 
     }
 }

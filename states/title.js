@@ -1,6 +1,7 @@
 import { Toolbox } from "../toolbox.js";
 
 
+
 export class Title {
 
     canvas;
@@ -65,7 +66,7 @@ export class Title {
 
         this.pencil.fillStyle = "gray";
         this.pencil.font = "20px Georgia";
-        this.pencil.fillText("Title", 10, 50);
+        this.pencil.fillText("The Kinda Working Spaceship", 10, 50);
 
         // Draw START button
         this.pencil.fillStyle = "pink";

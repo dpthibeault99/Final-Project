@@ -5,6 +5,7 @@ import { Title } from "./states/title.js";
 import { Toolbox } from "./toolbox.js";
 import { Credits } from "./states/credits.js";
 import { Meteor } from "./states/meteor.js";  
+import { YouWin } from "./states/youWin.js";
 // For reasons i dont understand, 
 // i had to put meteor.js is 
 //the states folder for it to work
@@ -20,6 +21,7 @@ let game = new Game (canvas, pencil);
 let gameOver = new Gameover(canvas, pencil);
 let title = new Title(canvas, pencil);
 let credits = new Credits(canvas, pencil);
+let youWin = new YouWin (canvas, pencil);
 
 let state = title;
 
@@ -37,12 +39,17 @@ function gameloop(){
     }
     if(command == "game") {
         state = game
+        game.enterGame()
     }
     // i was to focused on title.js i forgot about code.js. 
     // took me like an hour 
     // to figure out why credits wasnt working 
     if(command == "credits") {
         state = credits
+    }
+
+    if(command == "youWin") {
+        state = youWin
     }
 }
 

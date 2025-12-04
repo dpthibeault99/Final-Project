@@ -1,12 +1,14 @@
 import { Toolbox } from "../toolbox.js";
-
-// The goal is to have a stair field like 
-// credits of names and pictures
+  
 
 
-export class Credits {
+export class YouWin {
 
-   canvas;
+    // you can get to this screen 
+    // but i wont put anything 
+    // here until gameOver works
+
+    canvas;
        pencil;
        changeToState = false;
        toolbox = new Toolbox();
@@ -49,26 +51,26 @@ export class Credits {
         );
 
         // CREDITS button check
-        let hitTitle = this.toolbox.isWithinRect(
+        let hitCredits = this.toolbox.isWithinRect(
             event.offsetX, event.offsetY,
             this.creditsButtonX, this.creditsButtonY,
             this.creditsButtonW, this.creditsButtonH
         );
 
         if (hitRestart) this.changeToState = "game";
-        if (hitTitle) this.changeToState = "title";
+        if (hitCredits) this.changeToState = "credits";
     }
 
   
 
-
-    update() {
-         // clear screen each frame
+    
+        update() {
+        // clear screen each frame
         this.pencil.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.pencil.fillStyle = "gray";
         this.pencil.font = "20px Georgia";
-        this.pencil.fillText("Credits", 10, 50);
+        this.pencil.fillText("You Win!", 10, 50);
 
         // Draw Restart button
         this.pencil.fillStyle = "pink";
@@ -84,7 +86,7 @@ export class Credits {
             this.startButtonY + 30
         );
 
-        // Draw Title button
+        // Draw CREDITS button
         this.pencil.fillStyle = "lightblue";
         this.pencil.fillRect(
             this.creditsButtonX, this.creditsButtonY,
@@ -92,7 +94,7 @@ export class Credits {
         );
         /// how to put text over drawn images
         this.pencil.fillStyle = "black";
-        this.pencil.fillText("Title",
+        this.pencil.fillText("Credits",
             this.creditsButtonX + 15,
             this.creditsButtonY + 30
         );
@@ -103,9 +105,10 @@ export class Credits {
             this.changeToState = false;
             return result;  // "game" or "credits"
         }
-        console.log("Credits")
+        console.log("youWin");
+        
     }
 
-
-
 }
+
+  
