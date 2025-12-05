@@ -1,57 +1,45 @@
 
-import { Game} from "./states/game.js"
+import { Game } from "./states/game.js";
 import { Gameover } from "./states/gameOver.js";
 import { Title } from "./states/title.js";
 import { Toolbox } from "./toolbox.js";
 import { Credits } from "./states/credits.js";
-import { Meteor } from "./states/meteor.js";  
+import { Meteor } from "./states/meteor.js";
 import { YouWin } from "./states/youWin.js";
-// For reasons i dont understand, 
-// i had to put meteor.js is 
-//the states folder for it to work
-
 
 let canvas = document.getElementById("myCanvas");
-let pencil = canvas.getContext("2d"); // This gives you the drawing context, like a pencil
+let pencil = canvas.getContext("2d");
 let toolbox = new Toolbox();
 
-//Make game states
+let state = new Title(canvas, pencil);
 
-let game = new Game (canvas, pencil);
-let gameOver = new Gameover(canvas, pencil);
-let title = new Title(canvas, pencil);
-let credits = new Credits(canvas, pencil);
-let youWin = new YouWin (canvas, pencil);
-
-let state = title;
-
-function gameloop(){
-
-    pencil.clearRect(0,0, canvas.width, canvas.height);
+function gameloop() {
+    pencil.clearRect(0, 0, canvas.width, canvas.height);
 
     let command = state.update();
 
-    if(command == "title") {
-        state = title;
-    }
-    if(command == "gameOver") {
-        state = gameOver
-    }
-    if(command == "game") {
-        state = game
-        game.enterGame()
-    }
-    // i was to focused on title.js i forgot about code.js. 
-    // took me like an hour 
-    // to figure out why credits wasnt working 
-    if(command == "credits") {
-        state = credits
+    if (command === "title") {
+        state = new Title(canvas, pencil);
     }
 
-    if(command == "youWin") {
-        state = youWin
+    if (command === "gameOver") {
+        state = new Gameover(canvas, pencil);
+    }
+
+    if (command === "game") {
+        state = new Game(canvas, pencil);
+        state.enterGame();  // keep your setup
+    }
+
+    if (command === "credits") {
+        state = new Credits(canvas, pencil);
+    }
+
+    if (command === "youWin") {
+        state = new YouWin(canvas, pencil);
     }
 }
 
-setInterval(gameloop, 1000 / 60)
+setInterval(gameloop, 1000 / 60);
+
 

@@ -1,111 +1,72 @@
 import { Toolbox } from "../toolbox.js";
 
-// The goal is to have a stair field like 
-// credits of names and pictures
-
-
 export class Credits {
 
-   canvas;
-       pencil;
-       changeToState = false;
-       toolbox = new Toolbox();
-   
-       // Restart Button
-       startButtonX = 300;
-       startButtonY = 200;
-       startButtonW = 100;
-       startButtonH = 50;
-   
-       // Credits Button
-       creditsButtonX = 300;
-       creditsButtonY = 300;
-       creditsButtonW = 100;
-       creditsButtonH = 50;
-   
-       constructor(canvas, pencil) {
-           this.canvas = canvas;
-           this.pencil = pencil;
-   
-           this.onKeyPressed = this.onKeyPressed.bind(this);
-           this.onClicked = this.onClicked.bind(this);
-   
-           document.addEventListener("keypress", this.onKeyPressed);
-           document.addEventListener("click", this.onClicked);
-       }
+    canvas;
+    pencil;
+    changeToState = false;
+    toolbox = new Toolbox();
 
-       onKeyPressed() {
-        // keyboard always starts the game
-        this.changeToState = "game"; //working click to start, 
-        // cant coment out of breaks the code
+    // Back to Title button
+    titleButtonX = 300;
+    titleButtonY = 300;
+    titleButtonW = 100;
+    titleButtonH = 50;
+
+    constructor(canvas, pencil) {
+        this.canvas = canvas;
+        this.pencil = pencil;
+
+        // Only listen for clicks — not keypresses
+        this.onClicked = this.onClicked.bind(this);
+        document.addEventListener("click", this.onClicked);
     }
 
     onClicked(event) {
-        // Restart button check
-        let hitRestart = this.toolbox.isWithinRect(
-            event.offsetX, event.offsetY,
-            this.startButtonX, this.startButtonY,
-            this.startButtonW, this.startButtonH
-        );
-
-        // CREDITS button check
         let hitTitle = this.toolbox.isWithinRect(
             event.offsetX, event.offsetY,
-            this.creditsButtonX, this.creditsButtonY,
-            this.creditsButtonW, this.creditsButtonH
+            this.titleButtonX, this.titleButtonY,
+            this.titleButtonW, this.titleButtonH
         );
 
-        if (hitRestart) this.changeToState = "game";
-        if (hitTitle) this.changeToState = "title";
+        if (hitTitle) {
+            this.changeToState = "title";
+        }
     }
 
-  
-
-
     update() {
-         // clear screen each frame
         this.pencil.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Page title
         this.pencil.fillStyle = "gray";
-        this.pencil.font = "20px Georgia";
+        this.pencil.font = "30px Georgia";
         this.pencil.fillText("Credits", 10, 50);
 
-        // Draw Restart button
-        this.pencil.fillStyle = "pink";
-        this.pencil.fillRect(
-            this.startButtonX, this.startButtonY,
-            this.startButtonW, this.startButtonH
-        );
+        // test credits
+        this.pencil.font = "20px Georgia";
+        this.pencil.fillText("Programming: Daniel", 10, 100);
+        this.pencil.fillText("Art: Daniel", 10, 140);
 
-        /// how to put text over drawn images
-        this.pencil.fillStyle = "black";
-        this.pencil.fillText("Restart",
-            this.startButtonX + 20,
-            this.startButtonY + 30
-        );
-
-        // Draw Title button
+        // Title button
         this.pencil.fillStyle = "lightblue";
         this.pencil.fillRect(
-            this.creditsButtonX, this.creditsButtonY,
-            this.creditsButtonW, this.creditsButtonH
-        );
-        /// how to put text over drawn images
-        this.pencil.fillStyle = "black";
-        this.pencil.fillText("Title",
-            this.creditsButtonX + 15,
-            this.creditsButtonY + 30
+            this.titleButtonX, this.titleButtonY,
+            this.titleButtonW, this.titleButtonH
         );
 
-        // if state changed, return it
+        this.pencil.fillStyle = "black";
+        this.pencil.fillText("Title",
+            this.titleButtonX + 20,
+            this.titleButtonY + 30
+        );
+
+        // Return next state if changed
         if (this.changeToState) {
             const result = this.changeToState;
             this.changeToState = false;
-            return result;  // "game" or "credits"
+            return result;
         }
-        console.log("Credits")
+
+        console.log("Credits");
     }
-
-
-
 }

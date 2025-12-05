@@ -36,10 +36,12 @@ export class Title {
     /// it appears you only need diffrent sets of propertys to make
     /// more than one "button",and it has the same pixel x/y as the title button
 
-    onKeyPressed() {
+    onKeyPressed(event) {
         // keyboard always starts the game
+          if (event.key === "Enter") {
         this.changeToState = "game"; //working click to start, cant coment out of breaks the code
     }
+}
 
     onClicked(event) {
         // START button check
