@@ -26,7 +26,7 @@ export class Game {
 
         // load image
         this.image = new Image();
-        this.image.src = "./states/bird.png";
+        this.image.src = "./states/F15C.png";
 
         // start timer ONCE for this Game instance
         this.timerID = setInterval(() => this.countTime(), 1000);

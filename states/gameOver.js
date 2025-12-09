@@ -35,6 +35,9 @@ export class Gameover {
    
            document.addEventListener("keypress", this.onKeyPressed);
            document.addEventListener("click", this.onClicked);
+
+             this.Image = new Image();
+            this.Image.src = "./states/F15C-Lose.png";
        }
 
        onKeyPressed() {
@@ -73,6 +76,9 @@ export class Gameover {
         this.pencil.fillStyle = "gray";
         this.pencil.font = "20px Georgia";
         this.pencil.fillText("Gameover", 10, 50);
+
+            // gameOver image
+        this.pencil.drawImage(this.Image, 0, 300, 300, 300);
 
         // Draw Restart button
         this.pencil.fillStyle = "pink";

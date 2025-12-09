@@ -17,7 +17,10 @@ export class Credits {
         this.canvas = canvas;
         this.pencil = pencil;
 
-        // Only listen for clicks — not keypresses
+        // Load Julius picture once
+        this.Image = new Image();
+        this.Image.src = "./states/Julius.jpg";
+
         this.onClicked = this.onClicked.bind(this);
         document.addEventListener("click", this.onClicked);
     }
@@ -42,10 +45,15 @@ export class Credits {
         this.pencil.font = "30px Georgia";
         this.pencil.fillText("Credits", 10, 50);
 
-        // test credits
+        // Credits
         this.pencil.font = "20px Georgia";
-        this.pencil.fillText("Programming: Daniel", 10, 100);
-        this.pencil.fillText("Art: Daniel", 10, 140);
+        this.pencil.fillText("Programming: Daniel", 10, 90);
+        this.pencil.fillText("Art: Daniel", 10, 120);
+        this.pencil.fillText("Emotional Support: Julius", 10, 150);
+        this.pencil.fillText("My Dog Julius", 10, 280);
+
+        // Draw image (only if loaded)
+        this.pencil.drawImage(this.Image, 0, 300, 300, 300);
 
         // Title button
         this.pencil.fillStyle = "lightblue";
@@ -60,13 +68,10 @@ export class Credits {
             this.titleButtonY + 30
         );
 
-        // Return next state if changed
         if (this.changeToState) {
             const result = this.changeToState;
             this.changeToState = false;
             return result;
         }
-
-        console.log("Credits");
     }
 }
